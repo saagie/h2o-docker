@@ -43,12 +43,12 @@ RUN \
   wget https://raw.githubusercontent.com/laurendiperna/Churn_Scripts/master/Modeling_Script.py
 
 # Define a mountable data directory
- VOLUME \
-   ["/data"]
+#VOLUME ["/data"]
+VOLUME ["/root/h2oflows"]
 
 # Define the working directory
- WORKDIR \
-   /data
+#WORKDIR /data
+WORKDIR ["/root/h2oflows"]
 
 #EXPOSE 54321
 #EXPOSE 54322
@@ -66,8 +66,9 @@ COPY server.conf /etc/nginx/sites-enabled/h2o.conf
 
 RUN rm /etc/nginx/sites-enabled/default
 
-EXPOSE 80
+EXPOSE 54320
 
 ADD entrypoint.sh /entrypoint.sh
+RUN chmod 777 /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
